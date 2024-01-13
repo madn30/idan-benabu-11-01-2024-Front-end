@@ -1,0 +1,8 @@
+.error-label {
+  color: red;
+  margin: 8px 0px;
+}
+
+.error-label.center {
+  text-align: center;
+}

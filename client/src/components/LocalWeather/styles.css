@@ -1,0 +1,36 @@
+.local-weather-root {
+  background-color: #1c2129;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0px 20px auto;
+  text-align: center;
+  color: white;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.local-weather-root span {
+  display: block;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.local-weather-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.local-weather-info span,
+.local-weather-info div {
+  margin: 0 10px;
+}
+
+.favorite-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

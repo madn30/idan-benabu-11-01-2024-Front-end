@@ -1,0 +1,26 @@
+.layout-root {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  background-color: #22272f;
+}
+
+.layout-wrapper {
+  display: flex;
+  overflow: auto;
+  width: 100vw;
+  height: 100%;
+  margin-bottom: 10px;
+  max-width: 30em;
+  margin: auto;
+}
+
+.layout-content {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  padding-bottom: 11px;
+  padding-top: 1.5em;
+}
