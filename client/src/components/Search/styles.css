@@ -123,7 +123,11 @@ input {
 .search-bar input:valid + .search-btn:active {
   transform: translateY(1px);
 }
-
+.no-results {
+  color: red ;
+  margin:20px 0px 50px 0px;
+  text-align: center;
+}
 @media screen and (prefers-color-scheme: dark) {
   input {
     color: #f1f1f1;

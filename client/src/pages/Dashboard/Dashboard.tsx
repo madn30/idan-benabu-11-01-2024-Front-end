@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import Search from "../../components/Search/Search";
-import LocalWeatherCard from "../../components/LocalWeather/LocalWeatherCard";
 import "./styles.css";
 import WeatherContext from "../../contexts/WeatherContext";
+import WeatherCardContainer from "../../components/WeatherCardContainer/WeatherCardContainer";
+
 const Dashboard: React.FC = () => {
   const { selectedLocation } = useContext(WeatherContext);
   return (
@@ -10,7 +11,8 @@ const Dashboard: React.FC = () => {
       <Search />
       {selectedLocation && (
         <div className="dashboard-data-section">
-          <LocalWeatherCard cityInfo={selectedLocation} />
+          <span><b>Recent searched</b></span>
+          <WeatherCardContainer selectedCity={selectedLocation} />
         </div>
       )}
     </>

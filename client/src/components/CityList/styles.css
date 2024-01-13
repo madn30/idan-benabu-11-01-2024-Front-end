@@ -1,0 +1,31 @@
+.list-container {
+    width: 40%;
+    border-right: 1px solid #373e47;
+    padding: 10px;
+    color: white;
+    min-width: 40%;
+    margin-right: 20px;
+  }
+  
+  .list-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .list-container li {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-bottom: 1px solid #373e47;
+    transition: background-color 0.3s, color 0.3s;
+    color: white;
+  }
+  
+  .list-container li:hover {
+    background-color: #e9e9e9;
+    color: #333;
+  }
+  .selected-city {
+    background-color: #e9e9e9;
+    color: #333 !important;
+  }
+  

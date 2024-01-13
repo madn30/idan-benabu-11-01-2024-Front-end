@@ -1,5 +1,10 @@
-import React, { useState, useRef, useContext, useCallback } from "react";
-import axios from "axios";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import SearchResults from "./SearchResults/SearchResults";
 import { LocationInfoDto } from "../../types/weather";
 import "./styles.css";
@@ -9,68 +14,75 @@ import Loader from "../Loader/Loader";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
 
 const Search: React.FC = () => {
-  const [query, setQuery] = useState<string>("");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const [searchResults, setSearchResults] = useState<LocationInfoDto[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>("");
+  const [searchAttempted, setSearchAttempted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const { setSelectedLocation, setWeatherInfo } = useContext(WeatherContext);
+  const { setSelectedLocation } = useContext(WeatherContext);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setQuery(e.target.value);
-    },
-    []
-  );
-
   const handleSelectResult = useCallback(
-    async (value: LocationInfoDto) => {
+    (value: LocationInfoDto) => {
       setSelectedLocation(value);
       setQuery(value.name);
       setIsOpen(false);
     },
-    [setSelectedLocation, setWeatherInfo]
+    [setSelectedLocation]
   );
 
   const fetchSearchResults = useCallback(async () => {
     if (!query) return;
     setLoading(true);
     setError("");
+    setSearchAttempted(true); 
     try {
       const response = await searchLocations(query);
       const results = response.data;
-      setLoading(false);
 
-      if (results.length === 1) {
-        handleSelectResult(results[0]);
-      } else {
-        setSearchResults(results);
-        setIsOpen(results.length > 0);
+      if (results.length === 0) {
+        setQuery("");
       }
+
+      setSearchResults(results);
+      setIsOpen(results.length > 0);
     } catch (error) {
       console.error("Error during API call", error);
       setError("Failed to fetch results");
-      setSearchResults([]);
-      setIsOpen(false);
+    } finally {
       setLoading(false);
     }
-  }, [query, handleSelectResult]);
+  }, [query]);
 
-  const handleClickOutside = useCallback((event: MouseEvent) => {
-    if (
-      searchContainerRef.current &&
-      !searchContainerRef.current.contains(event.target as Node)
-    ) {
-      setIsOpen(false);
-    }
-  }, []);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
 
-  React.useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [handleClickOutside]);
+  }, []);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(e.target.value.replace(/[^A-Za-z ]/g, ""));
+    },
+    []
+  );
+
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter") fetchSearchResults();
+    },
+    [fetchSearchResults]
+  );
 
   return (
     <div className="search-container" ref={searchContainerRef}>
@@ -79,9 +91,10 @@ const Search: React.FC = () => {
           type="search"
           name="search"
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           value={query}
+          placeholder="Search city"
         />
-
         <button
           onClick={fetchSearchResults}
           className="search-btn"
@@ -90,12 +103,15 @@ const Search: React.FC = () => {
           {loading ? <Loader size={18} /> : <span>Search</span>}
         </button>
       </div>
-      {error && <ErrorLabel msg={error}/>}
-      {isOpen && (
+      {error && <ErrorLabel msg={error} />}
+      {isOpen && searchResults.length > 0 && (
         <SearchResults
           searchResults={searchResults}
           onSelect={handleSelectResult}
         />
+      )}
+      {!loading && searchResults.length === 0 && searchAttempted && (
+        <div className="no-results">No results found.</div>
       )}
     </div>
   );

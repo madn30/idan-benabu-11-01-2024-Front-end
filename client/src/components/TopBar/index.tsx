@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./styles.css";
 import { BiHomeAlt as HomeIcon } from "react-icons/bi";
-import { FiMessageCircle as MessagesIcon } from "react-icons/fi";
+import { MdFavoriteBorder as FavoriteIcon } from "react-icons/md";
 import { IconType } from "react-icons";
 import { Link as RouterLink } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -28,7 +28,7 @@ const TopBar = () => {
     { label: "Home", icon: <HomeIcon />, name: "home", to: "/" },
     {
       label: "Favorites",
-      icon: <MessagesIcon />,
+      icon: <FavoriteIcon />,
       name: "favorites",
       to: "/favorites",
     },

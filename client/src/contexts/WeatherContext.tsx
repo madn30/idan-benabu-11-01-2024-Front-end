@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from "react";
 import type { Dispatch, FC, ReactNode } from "react";
 import { WeatherInfoDto, LocationInfoDto } from "../types/weather";
 import axios from "axios";
+import { getCurrentWeather } from "../api";
 
 interface WeatherState {
   selectedLocation?: LocationInfoDto;
@@ -111,9 +112,7 @@ export const WeatherProvider: FC<WeatherProviderProps> = ({ children }) => {
 
   const setWeatherInfo = async (location: LocationInfoDto) => {
     try {
-      const response = await axios.get<WeatherInfoDto>(
-        `http://localhost:5000/weather/getWeather?cityKey=${location.key}`
-      );
+      const response = await getCurrentWeather(location.key);
       dispatch({ type: "SET_WEATHER_INFO", payload: response.data });
     } catch (error) {
       console.error("Failed to fetch weather info:", error);

@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
-import axios from "axios";
 import { Fragment, useContext, useEffect } from "react";
 import type { FC } from "react";
-import { LocationInfoDto } from "../../types/weather";
 import WeatherContext from "../../contexts/WeatherContext";
+import { getFavorites } from "../../api";
 
 const DataFetcher: FC = () => {
   const { setFavorites, setLoading, setError } = useContext(WeatherContext);
@@ -12,9 +11,7 @@ const DataFetcher: FC = () => {
     setLoading(true);
     const fetchFavorites = async () => {
       try {
-        const response = await axios.get<LocationInfoDto[]>(
-          "http://localhost:5000/weather/favorites"
-        );
+        const response = await getFavorites()
         setFavorites(response.data);
       } catch (err) {
         console.error("Error fetching favorites:", err);

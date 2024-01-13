@@ -3,4 +3,8 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  flex-direction: column;
+}
+.dashboard-data-section span {
+  color: white;
 }
