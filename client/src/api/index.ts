@@ -10,14 +10,13 @@ export const searchLocations = (query: string) => {
 export const getCurrentWeather = (cityKey: string) => {
   return axios.get(`${baseURL}/getWeather?cityKey=${cityKey}`);
 };
-export const getFavorites = () => {
-  return axios.get<LocationInfoDto[]>(`${baseURL}/favorites`);
-};
-
+export const getFavorites =  () =>{
+  return axios.get<LocationInfoDto[]>(`${baseURL}/favorites`)
+}
 export const addFavoriteCity = (cityData: LocationInfoDto) => {
-  return axios.post(`${baseURL}/favorite`, cityData);
+  return axios.post(`${baseURL}/favorites`, cityData);
 };
 
 export const deleteFavoriteCity = (cityKey: string) => {
-  return axios.delete(`${baseURL}/favorite/${cityKey}`);
+  return axios.delete(`${baseURL}/favorites/${cityKey}`);
 };

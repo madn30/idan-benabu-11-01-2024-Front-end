@@ -18,6 +18,9 @@ export const searchLocation = async (req, res) => {
 
     // If not in database, call API
     const locations = await AccuWeatherService.searchLocations(query);
+    if (locations.length === 0) {
+      return res.status(200).json({ message: "No locations found for the query." });
+    }
     const processedLocations = locations.map((location) => ({
       key: location.Key,
       name: location.LocalizedName,
