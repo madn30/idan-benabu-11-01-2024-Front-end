@@ -5,6 +5,7 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 import { useSearchLogic } from "../../hooks/useSearchLogic";
 import SearchBar from "./SearchBar/SearchBar";
 import "./styles.css";
+
 const Search: React.FC = () => {
   const {
     query,
