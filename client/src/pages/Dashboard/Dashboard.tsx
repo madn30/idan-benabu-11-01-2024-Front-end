@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Search from "../../components/Search/Search";
 import "./styles.css";
 import WeatherContext from "../../contexts/weather/WeatherContext";

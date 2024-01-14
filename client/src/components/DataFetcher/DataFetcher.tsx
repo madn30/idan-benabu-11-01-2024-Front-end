@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { Fragment, useContext, useEffect } from "react";
 import type { FC } from "react";
 import WeatherContext from "../../contexts/weather/WeatherContext";
