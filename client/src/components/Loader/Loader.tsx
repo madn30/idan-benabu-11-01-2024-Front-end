@@ -1,5 +1,4 @@
-import React from "react";
-import "./styles.css"; // Ensure this is the correct path to your CSS file
+import "./styles.css";
 import type { FC } from "react";
 
 type LoaderProps = {
