@@ -1,51 +1,20 @@
-import React, { useContext, useState, useEffect } from "react";
+// Favorite.tsx
+import React from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
-import WeatherContext from "../../contexts/weather/WeatherContext";
-import { LocationInfoDto } from "../../types/weather";
 import "./styles.css";
-import { addFavoriteCity, deleteFavoriteCity } from "../../api";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
 
 interface FavoriteProps {
-  city: LocationInfoDto;
+  isFavorited: boolean;
+  toggleFavorite: () => Promise<void>;
+  error: string;
 }
 
-function Favorite({ city }: FavoriteProps) {
-  const { favorites, setFavorites } = useContext(WeatherContext);
-  const [isFavorited, setIsFavorited] = useState(false);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    setIsFavorited(favorites.some((favorite) => favorite.key === city.key));
-  }, [city, favorites]);
-
-  const toggleFavorite = async (): Promise<void> => {
-    setError("");
-
-    try {
-      if (isFavorited) {
-        await deleteFavoriteCity(city.key);
-        setFavorites(
-          favorites.filter(
-            (favorite: LocationInfoDto) => favorite.key !== city.key
-          )
-        );
-      } else {
-        const payload: LocationInfoDto = { key: city.key, name: city.name };
-        await addFavoriteCity(payload);
-        setFavorites([...favorites, payload]); // Directly passing the new array
-      }
-    } catch (error) {
-      handleError(
-        error,
-        `Failed to ${isFavorited ? "remove" : "add"} favorite`
-      );
-    }
-  };
-  const handleError = (error: any, message: string): void => {
-    console.error(message, error);
-    setError(message);
-  };
+const FavoriteCard = ({
+  isFavorited,
+  toggleFavorite,
+  error,
+}: FavoriteProps) => {
   const iconStyle = {
     color: "red",
     transition: "transform 0.3s ease-in-out",
@@ -62,6 +31,6 @@ function Favorite({ city }: FavoriteProps) {
       )}
     </div>
   );
-}
+};
 
-export default Favorite;
+export default FavoriteCard;
