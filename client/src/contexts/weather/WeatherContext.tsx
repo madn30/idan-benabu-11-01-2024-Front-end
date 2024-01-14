@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, FC } from "react";
-import { WeatherState, WeatherContextValue, Action } from "./types";
+import { WeatherContextValue } from "./types";
 import { weatherReducer, initialWeatherState } from "./reducer";
 import {
   setSelectedLocationAction,

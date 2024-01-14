@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import WeatherContext from "../../contexts/weather/WeatherContext";
 import { LocationInfoDto } from "../../types/weather";
 import { addFavoriteCity, deleteFavoriteCity } from "../../api";

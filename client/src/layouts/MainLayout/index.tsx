@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import "./styles.css";
 import TopBar from "../../components/TopBar";
