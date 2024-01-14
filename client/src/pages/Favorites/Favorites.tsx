@@ -3,7 +3,7 @@ import "./styles.css";
 import { LocationInfoDto } from "../../types/weather";
 import Loader from "../../components/Loader/Loader";
 import ErrorLabel from "../../components/ErrorLabel/ErrorLabel";
-import WeatherContext from "../../contexts/WeatherContext";
+import WeatherContext from "../../contexts/weather/WeatherContext";
 import CityList from "../../components/CityList/CityList";
 import WeatherCardContainer from "../../components/WeatherCardContainer/WeatherCardContainer";
 

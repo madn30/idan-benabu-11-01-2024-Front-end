@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import { Fragment, useContext, useEffect } from "react";
 import type { FC } from "react";
-import WeatherContext from "../../contexts/WeatherContext";
+import WeatherContext from "../../contexts/weather/WeatherContext";
 import { getFavorites } from "../../api";
 
 const DataFetcher: FC = () => {

@@ -1,4 +1,4 @@
-import { WeatherProvider } from "./contexts/WeatherContext";
+import { WeatherProvider } from "./contexts/weather/WeatherContext";
 import { BrowserRouter as Router } from "react-router-dom";
 import { createRouting } from "./routes";
 import DataFetcher from "./components/DataFetcher/DataFetcher";

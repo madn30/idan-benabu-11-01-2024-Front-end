@@ -1,0 +1,10 @@
+.weather-card-container {
+  width: 60%;
+  padding: 10px;
+  margin: auto;
+}
+.weather-card-container-recent {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: center;
+}

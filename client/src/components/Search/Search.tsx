@@ -8,10 +8,11 @@ import React, {
 import SearchResults from "./SearchResults/SearchResults";
 import { LocationInfoDto } from "../../types/weather";
 import "./styles.css";
-import WeatherContext from "../../contexts/WeatherContext";
+import WeatherContext from "../../contexts/weather/WeatherContext";
 import { searchLocations } from "../../api";
 import Loader from "../Loader/Loader";
 import ErrorLabel from "../ErrorLabel/ErrorLabel";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 const Search: React.FC = () => {
   const [query, setQuery] = useState("");
@@ -20,9 +21,11 @@ const Search: React.FC = () => {
   const [searchAttempted, setSearchAttempted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  useOutsideClick(searchContainerRef, () => setIsOpen(false));
 
   const { setSelectedLocation } = useContext(WeatherContext);
-  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const handleSelectResult = useCallback(
     (value: LocationInfoDto) => {
@@ -37,7 +40,7 @@ const Search: React.FC = () => {
     if (!query) return;
     setLoading(true);
     setError("");
-    setSearchAttempted(true); 
+    setSearchAttempted(true);
     try {
       const response = await searchLocations(query);
       const results = response.data;
@@ -56,20 +59,6 @@ const Search: React.FC = () => {
     }
   }, [query]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchContainerRef.current &&
-        !searchContainerRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(e.target.value.replace(/[^A-Za-z ]/g, ""));
@@ -85,35 +74,37 @@ const Search: React.FC = () => {
   );
 
   return (
-    <div className="search-container" ref={searchContainerRef}>
-      <div className="search-bar">
-        <input
-          type="search"
-          name="search"
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          value={query}
-          placeholder="Search city"
-        />
-        <button
-          onClick={fetchSearchResults}
-          className="search-btn"
-          type="submit"
-        >
-          {loading ? <Loader size={18} /> : <span>Search</span>}
-        </button>
+    <>
+      <div className="search-container" ref={searchContainerRef}>
+        <div className="search-bar">
+          <input
+            type="search"
+            name="search"
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            value={query}
+            placeholder="Search city"
+          />
+          <button
+            onClick={fetchSearchResults}
+            className="search-btn"
+            type="submit"
+          >
+            {loading ? <Loader size={18} /> : <span>Search</span>}
+          </button>
+        </div>
+        {error && <ErrorLabel msg={error} />}
+        {isOpen && searchResults.length > 0 && (
+          <SearchResults
+            searchResults={searchResults}
+            onSelect={handleSelectResult}
+          />
+        )}
       </div>
-      {error && <ErrorLabel msg={error} />}
-      {isOpen && searchResults.length > 0 && (
-        <SearchResults
-          searchResults={searchResults}
-          onSelect={handleSelectResult}
-        />
-      )}
-      {!loading && searchResults.length === 0 && searchAttempted && (
+      {!loading && searchResults.length === 0 && searchAttempted && !error && (
         <div className="no-results">No results found.</div>
       )}
-    </div>
+    </>
   );
 };
 
