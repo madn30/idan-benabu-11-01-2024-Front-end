@@ -3,7 +3,6 @@ import React, {
   useRef,
   useContext,
   useCallback,
-  useEffect,
 } from "react";
 import SearchResults from "./SearchResults/SearchResults";
 import { LocationInfoDto } from "../../types/weather";

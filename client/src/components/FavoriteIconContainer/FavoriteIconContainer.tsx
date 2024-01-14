@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import WeatherContext from "../../contexts/weather/WeatherContext";
 import { LocationInfoDto } from "../../types/weather";
 import { addFavoriteCity, deleteFavoriteCity } from "../../api";
-import FavoriteCard from "../FavoriteCard/FavoriteCard";
+import FavoriteIcon from "./FavoriteIcon/FavoriteIcon";
 
-function FavoriteCardContainer({ city }: { city: LocationInfoDto }) {
+function FavoriteIconContainer({ city }: { city: LocationInfoDto }) {
   const { favorites, setFavorites } = useContext(WeatherContext);
   const [isFavorited, setIsFavorited] = useState(false);
   const [error, setError] = useState("");
@@ -34,7 +34,7 @@ function FavoriteCardContainer({ city }: { city: LocationInfoDto }) {
     setError(message);
   };
 
-  return <FavoriteCard isFavorited={isFavorited} toggleFavorite={toggleFavorite} error={error} />;
+  return <FavoriteIcon isFavorited={isFavorited} toggleFavorite={toggleFavorite} error={error} />;
 }
 
-export default FavoriteCardContainer;
+export default FavoriteIconContainer;

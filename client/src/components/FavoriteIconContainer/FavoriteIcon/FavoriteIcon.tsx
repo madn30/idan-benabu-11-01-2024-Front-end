@@ -1,7 +1,6 @@
-import React from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import "./styles.css";
-import ErrorLabel from "../ErrorLabel/ErrorLabel";
+import ErrorLabel from "../../ErrorLabel/ErrorLabel";
 
 interface FavoriteProps {
   isFavorited: boolean;
@@ -9,7 +8,7 @@ interface FavoriteProps {
   error: string;
 }
 
-const FavoriteCard = ({
+const FavoriteIcon = ({
   isFavorited,
   toggleFavorite,
   error,
@@ -32,4 +31,4 @@ const FavoriteCard = ({
   );
 };
 
-export default FavoriteCard;
+export default FavoriteIcon;

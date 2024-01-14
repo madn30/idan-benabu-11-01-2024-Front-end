@@ -1,11 +1,10 @@
 import React from "react";
 import "./styles.css";
-import FavoriteCard from "../../FavoriteCard/FavoriteCard";
 import { LocationInfoDto, WeatherInfoDto } from "../../../types/weather";
 import { WiCelsius } from "react-icons/wi";
 import Lottie from "lottie-react";
 import { getWeatherAnimation } from "./helper";
-import FavoriteCardContainer from "../../FavoriteCardContainer/FavoriteCardContainer";
+import FavoriteIconContainer from "../../FavoriteIconContainer/FavoriteIconContainer";
 
 interface LocalWeatherCardProps {
   weatherInfo: WeatherInfoDto;
@@ -20,7 +19,7 @@ export const LocalWeatherCard: React.FC<LocalWeatherCardProps> = ({
     weatherInfo && (
       <div className="local-weather-root">
         <div className="favorite-container">
-          <FavoriteCardContainer city={cityInfo} />
+          <FavoriteIconContainer city={cityInfo} />
         </div>
 
         <Lottie className="local-weather-animation" animationData={getWeatherAnimation(weatherInfo.weatherText)} />
