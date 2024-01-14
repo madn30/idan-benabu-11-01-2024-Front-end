@@ -15,9 +15,9 @@ export const getFavorites = () => {
 };
 
 export const addFavoriteCity = (cityData: LocationInfoDto) => {
-  return axios.post(`${baseURL}/favorites`, cityData);
+  return axios.post(`${baseURL}/favorite`, cityData);
 };
 
 export const deleteFavoriteCity = (cityKey: string) => {
-  return axios.delete(`${baseURL}/favorites/${cityKey}`);
+  return axios.delete(`${baseURL}/favorite/${cityKey}`);
 };

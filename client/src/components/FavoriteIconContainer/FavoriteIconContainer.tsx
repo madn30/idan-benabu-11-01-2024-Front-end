@@ -14,17 +14,24 @@ function FavoriteIconContainer({ city }: { city: LocationInfoDto }) {
   }, [city, favorites]);
 
   const toggleFavorite = async (): Promise<void> => {
+    const newFavorites = isFavorited
+      ? favorites.filter(favorite => favorite.key !== city.key)
+      : [...favorites, { key: city.key, name: city.name }];
+
+    setFavorites(newFavorites);
+    setIsFavorited(!isFavorited);
     setError("");
+
     try {
       if (isFavorited) {
         await deleteFavoriteCity(city.key);
-        setFavorites(favorites.filter(favorite => favorite.key !== city.key));
       } else {
         const payload: LocationInfoDto = { key: city.key, name: city.name };
         await addFavoriteCity(payload);
-        setFavorites([...favorites, payload]);
       }
     } catch (error: any) {
+      setFavorites(favorites);
+      setIsFavorited(favorites.some(favorite => favorite.key === city.key));
       handleError(error, `Failed to ${isFavorited ? "remove" : "add"} favorite`);
     }
   };
